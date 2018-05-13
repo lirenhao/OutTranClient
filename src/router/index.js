@@ -51,6 +51,7 @@ export default new Router({
       path: '/result',
       name: 'result',
       component: Result,
+      props: true,
       meta: {
         title: '支付结果',
         showBack: true

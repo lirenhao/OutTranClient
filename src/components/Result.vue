@@ -2,7 +2,7 @@
   <div>
     <logo/>
     <group title="订单详情">
-      <form-preview header-label="付款金额" header-value="¥2400.00"
+      <form-preview header-label="付款金额" :header-value="'¥' + tranAmt"
                     :body-items="list" :footer-buttons="buttons"/>
     </group>
   </div>
@@ -18,19 +18,15 @@
       Group,
       FormPreview
     },
-    data: function () {
-      return {
-        list: [{
-          label: '商品',
-          value: '电动打蛋机'
-        }, {
-          label: '标题标题',
-          value: '名字名字名字'
-        }, {
-          label: '标题标题',
-          value: '很长很长的名字很长很长的名字很长很长的名字很长很长的名字很长很长的名字'
-        }],
-        buttons: [{
+    props: ['resCode', 'resMsg', 'tranAmt', 'tranDate', 'cardNo', 'merNo', 'termNo'],
+    computed: {
+      list: function () {
+        const param = this.$props
+        return Object.keys(param)
+          .map((key) => ({label: key, value: param[key]}))
+      },
+      buttons: function () {
+        return [{
           style: 'primary',
           text: '支付完成',
           onButtonClick: () => {

@@ -30,7 +30,6 @@
     data: function () {
       return {
         validAmt: function (amt) {
-          console.log('valid', amt)
           const isValidAmt = /^\d{0,4}(\.\d{0,2})?$/.test(amt);
           if (amt && isValidAmt)
             return {valid: true}
@@ -66,7 +65,6 @@
           this.$http.post(url, param)
             .then((resp) => {
               if (resp.status === 200) {
-                console.log(resp)
                 this.$router.replace({
                   name: 'result',
                   params: resp.data
