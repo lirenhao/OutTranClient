@@ -1,8 +1,9 @@
 <template>
   <div>
     <logo/>
-    <group title="服务地址">
+    <group title="参数设置">
       <x-input title="地址" :value="url" @input="updateUrl" />
+      <x-input title="卡号" :value="cardNo" @input="updateCardNo" type="number"/>
     </group>
   </div>
 </template>
@@ -21,12 +22,16 @@
     },
     computed: {
       ...mapState({
-        url: state => state.url
+        url: state => state.url,
+        cardNo: state => state.cardNo
       })
     },
     methods: {
       updateUrl (url) {
         this.$store.commit('UPDATE_URL', url)
+      },
+      updateCardNo (cardNo) {
+        this.$store.commit('UPDATE_CARD_NO', cardNo)
       }
     }
   }

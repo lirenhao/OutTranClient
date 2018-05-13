@@ -6,17 +6,16 @@
                v-model.number="tranAmt" :is-type="validAmt"/>
     </group>
     <div style="padding:15px;">
-      <x-button @click.native="click" type="primary" text="支付"></x-button>
+      <x-button @click.native="click" type="primary" text="支付"/>
     </div>
-    {{type}}
-    {{param}}
+    <form-preview :body-items="list"/>
   </div>
 </template>
 
 <script>
   import Logo from './Logo'
   import {mapState} from 'vuex'
-  import {Group, Cell, XInput, XButton} from 'vux'
+  import {Group, Cell, XInput, XButton, FormPreview} from 'vux'
 
   export default {
     components: {
@@ -24,7 +23,8 @@
       Group,
       Cell,
       XInput,
-      XButton
+      XButton,
+      FormPreview
     },
     props: ['type', 'param'],
     data: function () {
@@ -42,8 +42,15 @@
     },
     computed: {
       ...mapState({
-        url: state => state.url
-      })
+        url: state => state.url,
+        cardNo: state => state.cardNo
+      }),
+      list: function () {
+        const param = this.$props.param
+        param.type = this.$props.type
+        return Object.keys(param)
+          .map((key) => ({label: key, value: param[key]}))
+      }
     },
     methods: {
       click: function () {
@@ -51,6 +58,7 @@
         const param = this.$props.param
         param.type = this.$props.type
         param.tranAmt = this.$data.tranAmt
+        param.cardNo = this.cardNo
 
         const validAmt = this.$data.validAmt(param.tranAmt)
         if (validAmt.valid) {

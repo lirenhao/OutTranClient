@@ -24,7 +24,7 @@ export default new Router({
       name: 'url',
       component: Url,
       meta: {
-        title: '连接地址',
+        title: '参数设置',
         showBack: true
       }
     },

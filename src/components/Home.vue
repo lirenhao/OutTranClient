@@ -2,8 +2,8 @@
   <div>
     <logo/>
     <group>
-      <cell title="连接地址" link="/url">
-        <x-icon slot="icon" class="icon" type="link" size="20"/>
+      <cell title="参数设置" link="/url">
+        <x-icon slot="icon" class="icon" type="settings" size="20"/>
       </cell>
       <cell title="扫码支付" link="/pay">
         <x-icon slot="icon" class="icon" type="qr-scanner" size="20"/>
