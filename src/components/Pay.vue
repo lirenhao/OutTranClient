@@ -27,24 +27,33 @@
           cordova.plugins.barcodeScanner.scan(
             (result) => {
               if (!result.cancelled) {
-                const tags = this.parse(result.text)
-                const wcTags = this.parse(tags['34'].value)
-                const sgTags = this.parse(tags['51'].value)
-                this.$router.push({
-                  name: 'amount',
-                  params: {
-                    type,
-                    param: {
-                      unionMerNo: tags['15'].value.substr(16, 15),
-                      wechatMerNo: wcTags['01'].value,
-                      wechatTermNo: wcTags['02'].value,
-                      sgqrId: sgTags['01'].value,
-                      sgqrPostalCode: sgTags['03'].value,
-                      sgqrUnitNumber: sgTags['05'].value,
-                      sgqrMiscellaneous: sgTags['06'].value
+                try {
+                  const tags = this.parse(result.text)
+                  const wcTags = this.parse(tags['34'].value)
+                  const sgTags = this.parse(tags['51'].value)
+                  this.$router.push({
+                    name: 'amount',
+                    params: {
+                      type,
+                      param: {
+                        unionMerNo: tags['15'].value.substr(16, 15),
+                        wechatMerNo: wcTags['01'].value,
+                        wechatTermNo: wcTags['02'].value,
+                        sgqrId: sgTags['01'].value,
+                        sgqrPostalCode: sgTags['03'].value,
+                        sgqrUnitNumber: sgTags['05'].value,
+                        sgqrMiscellaneous: sgTags['06'].value
+                      }
                     }
-                  }
-                })
+                  })
+                } catch (e) {
+                  this.$store.commit('UPDATE_LOADING', false)
+                  this.$vux.toast.show({
+                    type: 'warn',
+                    position: 'default',
+                    text: '解析二维码失败'
+                  })
+                }
               } else {
                 this.$store.commit('UPDATE_LOADING', false)
                 this.$vux.toast.show({
