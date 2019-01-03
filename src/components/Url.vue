@@ -3,7 +3,6 @@
     <logo/>
     <group title="参数设置">
       <x-input title="地址" :value="url" @input="updateUrl" />
-      <x-input title="卡号" :value="cardNo" @input="updateCardNo" type="number"/>
     </group>
   </div>
 </template>
