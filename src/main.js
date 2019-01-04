@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import {AjaxPlugin, ToastPlugin} from 'vux'
+import {AjaxPlugin, ToastPlugin, AlertPlugin} from 'vux'
 import FastClick from 'fastclick'
 import store from './vuex/store'
 import router from './router'
@@ -7,6 +7,7 @@ import App from './App'
 
 Vue.use(AjaxPlugin)
 Vue.use(ToastPlugin)
+Vue.use(AlertPlugin)
 
 FastClick.attach(document.body)
 

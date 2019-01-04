@@ -8,7 +8,7 @@ const cardNo = window.localStorage.cardNo
 
 const state = {
   isLoading: true,
-  url: url ? url : 'https://eccst.sg.ebs.bankofchina.com/sgecm/merapi/purchase',
+  url: url ? url : 'http://172.18.1.161:9999/purchase',
   cardNo: cardNo ? cardNo : '123456789012345678'
 }
 

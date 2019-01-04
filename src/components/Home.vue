@@ -14,8 +14,9 @@
 
 <script>
 import Logo from "./Logo";
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
 import { Group, Cell } from "vux";
+import sign from "../sign";
 
 export default {
   components: {
@@ -31,14 +32,43 @@ export default {
   methods: {
     toScanPay: function() {
       if (typeof cordova !== "undefined") {
-        this.$store.commit("UPDATE_LOADING", true);
         // 调设备扫二维码
         cordova.plugins.barcodeScanner.scan(
           result => {
             if (!result.cancelled) {
               console.log(result.text);
-              this.$http.post(this.url, {}).then(({data}) => {
-                console.log(data);
+              const params = {
+                msgInfo: {
+                  versionNo: "1.0.0",
+                  timeStamp: "20190102104538",
+                  orgId: "0001"
+                },
+                trxInfo: {
+                  merchantId: "123456789012345",
+                  terminalId: "12345678",
+                  tranAmt: 100,
+                  ccyCode: "702",
+                  merTraceNo: "201901021135390001000001",
+                  payLoad: result.text
+                },
+                certificateSignature: {
+                  signature: "00000000"
+                }
+              };
+              const signature = sign.sign(
+                JSON.stringify(params)
+              );
+              params.certificateSignature.signature = signature;
+              console.log('req', params);
+              this.$http.post(this.url, params).then(({ data }) => {
+                this.$vux.alert.show({
+                  title: '结果',
+                  content: JSON.stringify(data)
+                });
+                console.log('resp', data);
+                const signature = params.certificateSignature.signature;
+                params.certificateSignature.signature = '00000000'
+                console.log(sign.verity(JSON.stringify(data), signature))
               });
             } else {
               this.$store.commit("UPDATE_LOADING", false);
