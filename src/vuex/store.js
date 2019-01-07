@@ -4,12 +4,16 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const url = window.localStorage.url
-const cardNo = window.localStorage.cardNo
+const merNo = window.localStorage.merNo
+const termNo = window.localStorage.termNo
+const tranAmt = window.localStorage.tranAmt
 
 const state = {
   isLoading: true,
   url: url ? url : 'http://172.18.1.161:9999/purchase',
-  cardNo: cardNo ? cardNo : '123456789012345678'
+  merNo: merNo ? merNo : '104767011000006',
+  termNo: termNo ? termNo : '12345678',
+  tranAmt: tranAmt ? tranAmt : 100
 }
 
 export default new Vuex.Store({
@@ -22,9 +26,17 @@ export default new Vuex.Store({
       window.localStorage.setItem('url', url)
       state.url = url
     },
-    UPDATE_CARD_NO(state, cardNo) {
-      window.localStorage.setItem('cardNo', cardNo)
-      state.cardNo = cardNo
+    UPDATE_MER_NO(state, merNo) {
+      window.localStorage.setItem('merNo', merNo)
+      state.merNo = merNo
+    },
+    UPDATE_TERM_NO(state, termNo) {
+      window.localStorage.setItem('termNo', termNo)
+      state.termNo = termNo
+    },
+    UPDATE_TRAN_AMT(state, tranAmt) {
+      window.localStorage.setItem('tranAmt', tranAmt)
+      state.termNo = termNo
     }
   }
 })

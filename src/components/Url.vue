@@ -3,6 +3,9 @@
     <logo/>
     <group title="参数设置">
       <x-input title="地址" :value="url" @input="updateUrl" />
+      <x-input title="商户号" :value="merNo" @input="updateMerNo" />
+      <x-input title="终端号" :value="termNo" @input="updateTermNo" />
+      <x-input title="金额" :value="tranAmt" @input="updateTranAmt" />
     </group>
   </div>
 </template>
@@ -22,15 +25,23 @@
     computed: {
       ...mapState({
         url: state => state.url,
-        cardNo: state => state.cardNo
+        merNo: state => state.merNo,
+        termNo: state => state.termNo,
+        tranAmt: state => state.tranAmt
       })
     },
     methods: {
       updateUrl (url) {
         this.$store.commit('UPDATE_URL', url)
       },
-      updateCardNo (cardNo) {
-        this.$store.commit('UPDATE_CARD_NO', cardNo)
+      updateMerNo (merNo) {
+        this.$store.commit('UPDATE_MER_NO', merNo)
+      },
+      updateTermNo (termNo) {
+        this.$store.commit('UPDATE_TERM_NO', termNo)
+      },
+      updateTranAmt (tranAmt) {
+        this.$store.commit('UPDATE_TRAN_AMT', tranAmt)
       }
     }
   }

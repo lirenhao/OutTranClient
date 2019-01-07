@@ -16,6 +16,7 @@
 import Logo from "./Logo";
 import { mapState } from "vuex";
 import { Group, Cell } from "vux";
+import { dateFormat } from "vux";
 import sign from "../sign";
 
 export default {
@@ -26,7 +27,10 @@ export default {
   },
   computed: {
     ...mapState({
-      url: state => state.url
+      url: state => state.url,
+      merNo: state => state.merNo,
+      termNo: state => state.termNo,
+      tranAmt: state => state.tranAmt
     })
   },
   methods: {
@@ -44,31 +48,29 @@ export default {
                   orgId: "0001"
                 },
                 trxInfo: {
-                  merchantId: "123456789012345",
-                  terminalId: "12345678",
-                  tranAmt: 100,
+                  merchantId: this.merNo,
+                  terminalId: this.termNo,
+                  tranAmt: this.tranAmt,
                   ccyCode: "702",
-                  merTraceNo: "201901021135390001000001",
+                  merTraceNo: dateFormat(new Date(), 'YYYYMMDDHHmmss') + this.termNo + "0001",
                   payLoad: result.text
                 },
                 certificateSignature: {
                   signature: "00000000"
                 }
               };
-              const signature = sign.sign(
-                JSON.stringify(params)
-              );
+              const signature = sign.sign(JSON.stringify(params));
               params.certificateSignature.signature = signature;
-              console.log('req', params);
+              console.log("req", params);
               this.$http.post(this.url, params).then(({ data }) => {
                 this.$vux.alert.show({
-                  title: '结果',
+                  title: "结果",
                   content: JSON.stringify(data)
                 });
-                console.log('resp', data);
+                console.log("resp", data);
                 const signature = params.certificateSignature.signature;
-                params.certificateSignature.signature = '00000000'
-                console.log(sign.verity(JSON.stringify(data), signature))
+                params.certificateSignature.signature = "00000000";
+                console.log(sign.verity(JSON.stringify(data), signature));
               });
             } else {
               this.$store.commit("UPDATE_LOADING", false);
