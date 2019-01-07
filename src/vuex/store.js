@@ -10,9 +10,9 @@ const tranAmt = window.localStorage.tranAmt
 
 const state = {
   isLoading: true,
-  url: url ? url : 'http://172.18.1.161:9999/purchase',
+  url: url ? url : 'https://eccst.sg.ebs.bankofchina.com/sgecm/merapi/purchase',
   merNo: merNo ? merNo : '104767011000006',
-  termNo: termNo ? termNo : '12345678',
+  termNo: termNo ? termNo : '76002432',
   tranAmt: tranAmt ? tranAmt : 100
 }
 
@@ -36,7 +36,7 @@ export default new Vuex.Store({
     },
     UPDATE_TRAN_AMT(state, tranAmt) {
       window.localStorage.setItem('tranAmt', tranAmt)
-      state.termNo = termNo
+      state.tranAmt = tranAmt
     }
   }
 })
